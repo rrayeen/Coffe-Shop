@@ -1,37 +1,76 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { SplashScreen, Stack } from "expo-router";
+import { useEffect, useState } from "react";
+import { useFonts } from "expo-font";
+import { Provider } from "react-redux";
+import { store } from "@/store/store";
+import React from "react";
+import { ToastProvider } from "react-native-toast-notifications";
+import { Image } from "react-native";
+import icons from "@/constants/icons";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  const [fontLoaded, error] = useFonts({
+    "Sora-Bold": require("@/assets/fonts/Sora-Bold.ttf"),
+    "Sora-ExtraBold": require("@/assets/fonts/Sora-ExtraBold.ttf"),
+    "Sora-ExtraLight": require("@/assets/fonts/Sora-ExtraLight.ttf"),
+    "Sora-Light": require("@/assets/fonts/Sora-Light.ttf"),
+    "Sora-Medium": require("@/assets/fonts/Sora-Medium.ttf"),
+    "Sora-Regular": require("@/assets/fonts/Sora-Regular.ttf"),
+    "Sora-SemiBold": require("@/assets/fonts/Sora-SemiBold.ttf"),
+    "Sora-Thin": require("@/assets/fonts/Sora-Thin.ttf"),
   });
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    if (error) throw new Error();
+    if (fontLoaded) SplashScreen.hideAsync();
+  }, [fontLoaded, error]);
 
-  if (!loaded) {
-    return null;
-  }
-
+  if (!fontLoaded && !error) return null;
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <>
+      <Provider store={store}>
+        <ToastProvider
+          placement="bottom"
+          duration={3000}
+          animationType="zoom-in"
+          successIcon={
+            <Image
+              className="w-6 h-6"
+              resizeMode="contain"
+              source={icons.correct}
+            ></Image>
+          }
+          dangerIcon={
+            <Image
+              className="w-6 h-6"
+              resizeMode="contain"
+              source={icons.warning}
+            ></Image>
+          }
+          warningIcon={
+            <Image
+              className="w-6 h-6"
+              resizeMode="contain"
+              source={icons.warning}
+            ></Image>
+          }
+          textStyle={{
+            fontFamily: "Sora-Regular",
+            fontSize: 18,
+            paddingHorizontal: 12,
+          }}
+        >
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="item/[itemId]" />
+            <Stack.Screen name="order/[orderId]" />
+            <Stack.Screen name="(auth)" />
+          </Stack>
+        </ToastProvider>
+      </Provider>
+    </>
   );
 }
