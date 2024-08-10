@@ -2,7 +2,7 @@ import CustomButton from "@/components/CustomButton";
 import images from "@/constants/images";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { ImageBackground, Text, View } from "react-native";
+import { ImageBackground, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React from "react";
 

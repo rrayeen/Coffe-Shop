@@ -9,8 +9,8 @@ interface cartState {
 
 // Define the initial state using that type
 const initialState: cartState = {
-  username: "rayen",
-  adress: "hshshshs",
+  username: "",
+  adress: "",
   cart: [],
 };
 

@@ -19,24 +19,30 @@ import { clearCart, CreateAdress } from "@/store/features/CartSlice";
 import { OrderCart } from "@/lib/appwriter";
 import { useToast } from "react-native-toast-notifications";
 
-const AdressForm = ({ setIsEditing }: { setIsEditing: any }) => {
+const AdressForm = ({
+  setIsEditing,
+  defaultUserName,
+}: {
+  defaultUserName: string;
+  setIsEditing: any;
+}) => {
   const dispatch = useAppDispatch();
-  const [form, setForm] = useState({ adress: "", username: "" });
+  const [form, setForm] = useState({ adress: "", username: defaultUserName });
 
   return (
     <View className="flex-col gap-3">
       <TextInput
         value={form.username}
         placeholder="Username"
-        className="py-2 px-4  placeholder:font-sMedium rounded-xl bg-fourth"
-        placeholderTextColor={"#313131"}
+        className="py-2 px-4 text-lg font-sRegular  placeholder:font-sMedium rounded-xl bg-fourth"
+        placeholderTextColor={"#424141"}
         onChangeText={(e) => setForm({ ...form, username: e })}
       ></TextInput>
       <TextInput
         value={form.adress}
         placeholder="Full Adress"
-        className="py-2 px-4  placeholder:font-sMedium rounded-xl bg-fourth"
-        placeholderTextColor={"#313131"}
+        className="py-2 px-4 text-lg font-sRegular  placeholder:font-sMedium rounded-xl bg-fourth"
+        placeholderTextColor={"#424141"}
         onChangeText={(e) => setForm({ ...form, adress: e })}
       ></TextInput>
       <TouchableOpacity
@@ -128,14 +134,17 @@ const cart = () => {
                 tintColor={"black"}
               ></Image>
             </TouchableOpacity>
-            <Text className="font-sSemiBold text-lg">Order</Text>
+            <Text className="font-sSemiBold text-lg">Cart</Text>
             <View className="w-8 h-8 bg-transparent"></View>
           </View>
           <Text className="font-sMedium text-lg mt-7 mb-5">
             Delivery Adress
           </Text>
           {isEditing || !adress || !username ? (
-            <AdressForm setIsEditing={setIsEditing}></AdressForm>
+            <AdressForm
+              defaultUserName={username}
+              setIsEditing={setIsEditing}
+            ></AdressForm>
           ) : (
             <Adress
               setIsEditing={setIsEditing}

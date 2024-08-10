@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import useAppWrite from "@/lib/useAppWrite";
 import { loginUser, logoutUser } from "@/store/features/UserSlice";
 import { getCurrentUser } from "@/lib/appwriter";
-import Loader from "@/components/Loader";
 
 const _layout = () => {
   const { data, isLoading } = useAppWrite(getCurrentUser);

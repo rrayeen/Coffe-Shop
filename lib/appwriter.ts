@@ -81,7 +81,8 @@ export async function createUser({
 
     return newUser;
   } catch (error: any) {
-    throw new Error("create user");
+    return undefined;
+    throw new Error(error);
   }
 }
 export async function login({
@@ -95,6 +96,7 @@ export async function login({
     const user = await account.createEmailPasswordSession(email, password);
     return user;
   } catch (error: any) {
+    return undefined;
     throw new Error(error);
   }
 }
@@ -105,7 +107,7 @@ export async function logout() {
 
     return session;
   } catch (error: any) {
-    throw new Error("logout");
+    throw new Error(error);
   }
 }
 export async function getUser(id: string) {
@@ -135,6 +137,7 @@ export const getCurrentUser = async () => {
     if (!currentUser) throw Error();
     return currentUser.documents[0];
   } catch (error) {
+    return undefined;
     console.log(error);
   }
 };
@@ -201,7 +204,6 @@ export const getOrder = async (id: any) => {
       config.purchaseCollectionId,
       [Query.equal("$id", id)]
     );
-    console.log(order);
     return order.documents[0];
   } catch (error) {
     console.log(error);
