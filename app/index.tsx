@@ -8,17 +8,19 @@ import React from "react";
 
 export default function Index() {
   return (
-    <SafeAreaView className="flex-1  bg-black">
+    <SafeAreaView className="flex-1 pb-10 bg-black">
       <View className="h-[65%] items-center w-full">
         <ImageBackground
           source={images.coffe_Background}
           className="h-full w-full"
           resizeMode="cover"
         ></ImageBackground>
-        <Text className="text-white font-sSemiBold text-4xl mt-[-45px]  leading-[50px]  text-center px-10">
+      </View>
+      <View className="flex-end h-[35%]  items-center w-full">
+        <Text className="text-white font-sSemiBold text-4xl   leading-[50px]  text-center px-10">
           Fall in Love with Coffe in Blissful Delight!
         </Text>
-        <Text className="text-fourth text-center px-8 mt-3 text-base">
+        <Text className="text-gray-200 text-center px-8 mt-3 text-base">
           Welcome to our crazy coffe corner, where every cup is delightful for
           you
         </Text>
